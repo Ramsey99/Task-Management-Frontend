@@ -10,6 +10,8 @@ export const login = async (credentials) => {
     return response.json();
 };
 
+// this is push request
+
 export const signup = async (userData) => {
     const response = await fetch(`${API_BASE_URL}/users/register`, {
         method: 'POST',
