@@ -31,3 +31,7 @@ export const getuser= async(token) => {
     });
     return response.json();
 }
+
+export const tating=()=>{
+
+}
