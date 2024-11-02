@@ -33,5 +33,6 @@ export const getuser= async(token) => {
 }
 
 export const tating=()=>{
-
+ console.log("rating");
+ 
 }
