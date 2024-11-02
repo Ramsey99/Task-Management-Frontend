@@ -10,8 +10,6 @@ export const login = async (credentials) => {
     return response.json();
 };
 
-
-
 export const signup = async (userData) => {
     const response = await fetch(`${API_BASE_URL}/users/register`, {
         method: 'POST',
@@ -32,4 +30,8 @@ export const getuser= async(token) => {
         },
     });
     return response.json();
+}
+
+export const tating=()=>{
+
 }
