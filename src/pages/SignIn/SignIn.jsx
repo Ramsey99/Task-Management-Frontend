@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +20,7 @@ const SignIn = () => {
     login(userData).then((res)=>{
       console.log(res.accessToken);
       saveToken(res.accessToken);
+      redirect('/');
       
     }).catch((err)=>{
       console.log(err);
@@ -66,7 +67,7 @@ const SignIn = () => {
 
         <Button type="submit">Log In</Button>
         <p className='mb-0 mt-4'>Don't have an account?</p>
-        <Link to="/signup" className="mt-1 text-blue-700 hover:underline">
+        <Link to="/auth/register" className="mt-1 text-blue-700 hover:underline">
            Sign Up
         </Link>
       </form>

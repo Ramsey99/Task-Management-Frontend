@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { login } from '../api/auth';
 import { saveToken, getToken, clearToken } from '../utils/storage';
-import { getuser } from '../api/auth';
+import { getuser } from '../api/user';
 
 const useAuth = () => {
     const [user, setUser] = useState(null); // Initialize as null
