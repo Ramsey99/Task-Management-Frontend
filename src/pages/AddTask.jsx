@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getcategories } from '../api/category';
+import { addtask } from '../api/task';
 
 const AddTask = ({ categories = [] }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,17 @@ const AddTask = ({ categories = [] }) => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [category,setCategory]=useState([]);
+  useEffect(()=>{
+    getcategories().then((res)=>{
+      console.log(res);
+      setCategory(res);
+    }).catch((err)=>{
+      console.log(err);
+      
+    })
+  },[]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,12 +40,15 @@ const AddTask = ({ categories = [] }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    setLoading(true);
-    setTimeout(() => {
-      console.log('Task Added:', formData);
-      setFormData({ category: '', title: '', description: '', lastDate: '' });
-      setLoading(false);
-    }, 1000);
+    // setLoading(true);
+    console.log(formData);
+    addtask(formData).then((res)=>{
+    console.log(res);
+    
+    }).catch((err)=>{
+
+    })
+    
   };
 
   return (
@@ -49,9 +65,9 @@ const AddTask = ({ categories = [] }) => {
               className={`border rounded p-2 w-full ${errors.category ? 'border-red-500' : ''}`}
             >
               <option value="">Select Category</option>
-              {categories.map((cat, idx) => (
-                <option key={idx} value={cat}>
-                  {cat}
+              {category.map((cat, idx) => (
+                <option key={idx} value={cat._id}>
+                  {cat.name}
                 </option>
               ))}
             </select>

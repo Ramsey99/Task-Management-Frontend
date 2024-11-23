@@ -4,3 +4,8 @@ export const API_BASE_URL = 'https://task-management-system-backend-one.vercel.a
 export const defaultHeaders = {
     'Content-Type': 'application/json',
 };
+
+export const defaultHeaderswithtoken = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+};

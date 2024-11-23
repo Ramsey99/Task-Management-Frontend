@@ -1,67 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { gettask } from "../api/task";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      category: "Work",
-      title: "Complete Project Report",
-      description:
-        "Finalize and submit the project report by the end of the week.",
-      date: "2023-10-15",
-    },
-    {
-      id: 2,
-      category: "Personal",
-      title: "Grocery Shopping",
-      description:
-        "Buy groceries for the week including fruits and vegetables.",
-      date: "2023-10-14",
-    },
-    {
-      id: 3,
-      category: "Fitness",
-      title: "Gym Workout",
-      description: "Attend the gym for a full-body workout session.",
-      date: "2023-10-13",
-    },
-    {
-      id: 4,
-      category: "Study",
-      title: "Read a Book",
-      description: "Finish reading the current book on JavaScript.",
-      date: "2023-10-12",
-    },
-    {
-      id: 5,
-      category: "Work",
-      title: "Team Meeting",
-      description: "Attend the weekly team meeting to discuss project updates.",
-      date: "2023-10-11",
-    },
-    {
-      id: 6,
-      category: "Personal",
-      title: "Clean the House",
-      description: "Do a thorough cleaning of the house this weekend.",
-      date: "2023-10-10",
-    },
-    {
-      id: 7,
-      category: "Fitness",
-      title: "Yoga Session",
-      description: "Join the online yoga class for relaxation and flexibility.",
-      date: "2023-10-09",
-    },
-    {
-      id: 8,
-      category: "Personal",
-      title: "Plan a Trip",
-      description: "Start planning the trip for the upcoming holidays.",
-      date: "2023-10-08",
-    },
+    // {
+    //   id: 1,
+    //   category: "Work",
+    //   title: "Complete Project Report",
+    //   description:
+    //     "Finalize and submit the project report by the end of the week.",
+    //   date: "2023-10-15",
+    // },
+    // {
+    //   id: 2,
+    //   category: "Personal",
+    //   title: "Grocery Shopping",
+    //   description:
+    //     "Buy groceries for the week including fruits and vegetables.",
+    //   date: "2023-10-14",
+    // },
+    // {
+    //   id: 3,
+    //   category: "Fitness",
+    //   title: "Gym Workout",
+    //   description: "Attend the gym for a full-body workout session.",
+    //   date: "2023-10-13",
+    // },
+    // {
+    //   id: 4,
+    //   category: "Study",
+    //   title: "Read a Book",
+    //   description: "Finish reading the current book on JavaScript.",
+    //   date: "2023-10-12",
+    // },
+    // {
+    //   id: 5,
+    //   category: "Work",
+    //   title: "Team Meeting",
+    //   description: "Attend the weekly team meeting to discuss project updates.",
+    //   date: "2023-10-11",
+    // },
+    // {
+    //   id: 6,
+    //   category: "Personal",
+    //   title: "Clean the House",
+    //   description: "Do a thorough cleaning of the house this weekend.",
+    //   date: "2023-10-10",
+    // },
+    // {
+    //   id: 7,
+    //   category: "Fitness",
+    //   title: "Yoga Session",
+    //   description: "Join the online yoga class for relaxation and flexibility.",
+    //   date: "2023-10-09",
+    // },
+    // {
+    //   id: 8,
+    //   category: "Personal",
+    //   title: "Plan a Trip",
+    //   description: "Start planning the trip for the upcoming holidays.",
+    //   date: "2023-10-08",
+    // },
   ]);
+
+
+  useEffect(()=>{
+   gettask().then((res)=>{
+   console.log(res);
+   setTasks(res.tasks);
+   }).catch((err)=>{
+
+   })
+  },[])
 
   const [isEditing, setIsEditing] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
@@ -104,8 +115,9 @@ const TaskList = () => {
         <div className="max-h-80 overflow-y-auto">
           <ul className="space-y-4">
             {tasks.map((task) => (
+
               <li
-                key={task.id}
+                key={task._id}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-20 rounded-lg"></div>
@@ -121,19 +133,19 @@ const TaskList = () => {
                       {task.category}
                     </span>
                     <span className="block text-sm text-gray-500">
-                      {task.date}
+                       {new Date(task.last_date).toISOString().split('T')[0]}
                     </span>
                   </div>
                 </div>
                 <div className="mt-4 flex justify-end space-x-3">
                   <button
-                    onClick={() => handleEdit(task.id)}
+                    onClick={() => handleEdit(task._id)}
                     className="flex items-center text-blue-600 hover:text-blue-800 transition duration-200 cursor-pointer"
                   >
                     <FaEdit className="mr-1" /> Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(task.id)}
+                    onClick={() => handleDelete(task._id)}
                     className="flex items-center text-red-600 hover:text-red-800 transition duration-200 cursor-pointer"
                   >
                     <FaTrash className="mr-1" /> Delete
